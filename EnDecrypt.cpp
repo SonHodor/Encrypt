@@ -1,14 +1,13 @@
 // add new class Decrypt
 // re-write class Encrypt, hide all func in classes from interface
 
-#include "pch.h"
 #include <iostream>
 #include <vector>
 #include <sstream>
 
 
 
-using namespace std;
+using namespace std;//plivet
 
 //
 //Program was absolutly re-writed, I mooved all encrypting actions from *main* to *encrypt* class
@@ -266,6 +265,27 @@ public:
 	}
 	decrypt() {};
 
+	void fromAbCaesar() {
+		cout << "Print caesar key to decrypt: ";
+		cin >> caeKey;
+		cout << endl;
+
+		while (true)
+		{
+			if (caeKey > 31) {
+				caeKey -= 32;
+			}
+			else {
+				caeKey = 32 - caeKey;
+				break;
+			}
+		}
+		strAbToKey();
+		keyToCaesarKey();
+		keyToChArr();
+		showMess();
+	}
+
 	void fromCaesarBasic() {
 		cout << "Print caesar key to decrypt: ";
 		cin >> caeKey;
@@ -288,7 +308,7 @@ public:
 		showMess();
 	}
 
-	void fromAbBasic() 
+	void fromAbBasic()
 	{
 		strAbToKey();
 		keyToChArr();
@@ -319,10 +339,12 @@ private:
 		{
 			message[i].keyToCh();
 		}
-	}
+	} 
+	//for AB key to message
 
 	void strAbToKey() {
-		int g = int(mess.length()) / 6 + 1;
+		int g = lengthStr;
+		cout << lengthStr<<endl;
 		bool isEquals;
 		int i = 0, k = 0;
 
@@ -339,7 +361,7 @@ private:
 			{
 				message.push_back(i);
 				k += 6;
-				cout <<i<<"     ";
+				//cout <<i<<"    ";
 				g -= 1;
 				i = 0;
 			}
@@ -347,8 +369,9 @@ private:
 				i++;
 			}
 		}
+		cout << "str to ab key is OK" << endl;
 	}
-	
+
 	char alph5B[32][5] = { {'a','a','a','a','a'},{'a','a','a','a','b'},{'a','a','a','b','b'},{'a','a','b','b','b'},{'a','b','b','b','b'},{'b','b','b','b','b'},
 				   {'b','b','b','b','a'},{'b','b','b','a','b'},{'b','b','a','b','b'},{'b','a','b','b','b'},{'a','b','b','b','a'},{'b','b','b','a','a'},
 				   {'b','b','a','a','b'},{'b','a','a','b','b'},{'a','a','b','b','a'},{'a','b','b','a','b'},{'b','b','a','b','a'},{'b','a','b','a','b'},
@@ -357,7 +380,7 @@ private:
 				   {'a','b','a','a','a'},{'b','a','a','a','a'} };
 
 	void keyToCaesarKey() {
-		for (int i = 0; i < mess.length(); i++)
+		for (int i = 0; i < lengthStr; i++)
 		{
 			message[i].caesarWithKey(caeKey);
 		}
@@ -369,6 +392,7 @@ private:
 			cout << message[i].letCh;
 		}
 	}
+	//for message key to message
 
 	void keyToMess() {
 		for (int i = 0; i < mess.length(); i++)
@@ -407,13 +431,15 @@ int main()
 	getline(cin, mess);
 
 	decrypt messageDec(mess);
-	messageDec.fromCaesarBasic();
+	messageDec.fromAbCaesar();
 
 	/*encrypt messageEnc(mess);
 	messageEnc.toAbOnly();*/
 
 	//bbbab aabba baaab baaaa aabbb aabba baaaa aabab aabba abbaa baaaa aabbb aabba bbabb baabb baaba abaaa aaaaa baaaa
 	//?xs!apbtbkobpbpxctowdxmmmm
+
+
 	/*
 
 		char choise;
