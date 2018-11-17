@@ -176,6 +176,8 @@ public:
 		:mess(m) {}
 	encrypt() {};
 
+	
+
 	void toAbOnly()
 	{
 		messToKey();
@@ -430,18 +432,11 @@ int main()
 
 	getline(cin, mess);
 
+	encrypt messageEnc(mess);
 	decrypt messageDec(mess);
-	messageDec.fromAbCaesar();
 
-	/*encrypt messageEnc(mess);
-	messageEnc.toAbOnly();*/
-
-	//bbbab aabba baaab baaaa aabbb aabba baaaa aabab aabba abbaa baaaa aabbb aabba bbabb baabb baaba abaaa aaaaa baaaa
-	//?xs!apbtbkobpbpxctowdxmmmm
-
-
+	
 	/*
-
 		char choise;
 		cout<<"What do you want to do with text?\n1.Decrypt\n2.Encrypt\n";
 		cin>>choise;
@@ -456,6 +451,16 @@ int main()
 			default:
 				cout<<"I can't understand, white 1 or 2\n";
 		}*/
+
+	messageDec.fromAbCaesar();
+
+	
+
+	//bbbab aabba baaab baaaa aabbb aabba baaaa aabab aabba abbaa baaaa aabbb aabba bbabb baabb baaba abaaa aaaaa baaaa
+	//?xs!apbtbkobpbpxctowdxmmmm
+
+
+	
 
 
 
