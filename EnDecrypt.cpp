@@ -4,16 +4,13 @@
 #include <iostream>
 #include <vector>
 #include <sstream>
-
-
+#include <cstdio>
 
 using namespace std;//plivet
 
 //
 //Program was absolutly re-writed, I mooved all encrypting actions from *main* to *encrypt* class
 //
-
-
 class Letter
 {
 public:
@@ -142,7 +139,6 @@ private:
 	}
 
 };
-
 void Letter::keyTo5bArr()
 {
 	//string beconAB = "aaaaabbbbbabbbaabbababbaaababaabaaaaa";
@@ -151,7 +147,6 @@ void Letter::keyTo5bArr()
 		letCh5B[i] = beconAB[letKey + i];
 	}
 }
-
 void Letter::charToIntKey()
 {
 	if ((letCh > 96) && (letCh < 123)) {
@@ -161,8 +156,6 @@ void Letter::charToIntKey()
 		letKey = switSearch(letCh);
 	}
 }
-
-
 
 class encrypt//ZASHIFROVKA
 {
@@ -176,7 +169,22 @@ public:
 		:mess(m) {}
 	encrypt() {};
 
-	
+	void choiseEnc(char chCh) {
+		switch (chCh) {
+		case '1':
+			toAbOnly();
+			break;
+		case '2':
+			toCaesarBasic();
+			break;
+		case '3':
+			toAbCaesar();
+			break;
+		default:
+			cout << "IDK" << endl;
+			break;
+		}
+	}
 
 	void toAbOnly()
 	{
@@ -234,8 +242,6 @@ private:
 		{
 			message[i].printArr5B();
 		}
-
-
 	}
 
 	void showMess() {
@@ -266,6 +272,23 @@ public:
 		lengthStr = int(m.length()) / 6 + 1;
 	}
 	decrypt() {};
+
+	void choiseDec(char chCh) {
+		switch (chCh) {
+		case '1':
+			fromAbBasic();
+			break;
+		case '2':
+			fromCaesarBasic();
+			break;
+		case '3':
+			fromAbCaesar();
+			break;
+		default:
+			cout << "IDK" << endl;
+			break;
+		}
+	}
 
 	void fromAbCaesar() {
 		cout << "Print caesar key to decrypt: ";
@@ -341,7 +364,7 @@ private:
 		{
 			message[i].keyToCh();
 		}
-	} 
+	}
 	//for AB key to message
 
 	void strAbToKey() {
@@ -424,45 +447,54 @@ private:
 
 
 
-
-
 int main()
 {
+	bool work = true;
 	string mess;
+	while (work) {
+		
+		////PLEASE REWORK IT LATER/////////
 
-	getline(cin, mess);
+		cout << endl << "Print your message" << endl;
+		while (true) {
 
-	encrypt messageEnc(mess);
-	decrypt messageDec(mess);
+			getline(cin, mess);
+			if (mess.size() == 0)
+				cout << "Your message is empty, write again.\n";
+			else
+				break;
+		}
 
-	
-	/*
+		decrypt messageDec(mess);
+		encrypt messageEnc(mess);
+
 		char choise;
-		cout<<"What do you want to do with text?\n1.Decrypt\n2.Encrypt\n";
-		cin>>choise;
-
-
-		switch(choise)
-		{
-			case '1':
-				break;
-			case '2':
-				break;
-			default:
-				cout<<"I can't understand, white 1 or 2\n";
-		}*/
-
-	messageDec.fromAbCaesar();
-
-	
-
+		char chCh;
+		cout << "What do you want to do with text?\n1.Decrypt\n2.Encrypt\n\nIf you want to exit program enter 0\n";
+		cin >> choise;
+		switch (choise) {
+		case'0':			   //EXIT
+			work = false;
+			break;
+		case '1':              //Decrypt
+			cout << "What do you want to use?\n1.Only Bacon.\n2.Only Caesar.\n3.Caesar with Bacon." << endl;
+			cin >> chCh;
+			messageDec.choiseDec(chCh);
+			break;
+		case '2':              //Encrypt
+			cout << "What do you want to use?\n1.Only Bacon.\n2.Only Caesar.\n3.Caesar with Bacon." << endl;
+			cin >> chCh;
+			messageEnc.choiseEnc(chCh);
+			break;
+		default:
+			cout << "I can't understand, white 0, 1 or 2\n";
+		}
+	}
+	////////Debug for Bacon Only//////////////
 	//bbbab aabba baaab baaaa aabbb aabba baaaa aabab aabba abbaa baaaa aabbb aabba bbabb baabb baaba abaaa aaaaa baaaa
+
+	////////Debug for Caesar with key = 15////
 	//?xs!apbtbkobpbpxctowdxmmmm
-
-
-	
-
-
 
 	return 0;
 }
