@@ -369,7 +369,7 @@ private:
 
 	void strAbToKey() {
 		int g = lengthStr;
-		cout << lengthStr<<endl;
+		
 		bool isEquals;
 		int i = 0, k = 0;
 
@@ -386,7 +386,7 @@ private:
 			{
 				message.push_back(i);
 				k += 6;
-				//cout <<i<<"    ";
+				
 				g -= 1;
 				i = 0;
 			}
@@ -394,7 +394,7 @@ private:
 				i++;
 			}
 		}
-		cout << "str to ab key is OK" << endl;
+		
 	}
 
 	char alph5B[32][5] = { {'a','a','a','a','a'},{'a','a','a','a','b'},{'a','a','a','b','b'},{'a','a','b','b','b'},{'a','b','b','b','b'},{'b','b','b','b','b'},
