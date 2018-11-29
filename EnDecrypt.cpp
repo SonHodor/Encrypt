@@ -265,7 +265,7 @@ public:
 	string mess;
 	int lengthStr;
 	vector <Letter> message;
-	int caeKey = 3;
+	int caeKey = 0;
 
 	decrypt(string m)
 		:mess(m) {
@@ -284,9 +284,26 @@ public:
 		case '3':
 			fromAbCaesar();
 			break;
+		case '4':
+			tryDecCaesar();
 		default:
 			cout << "IDK" << endl;
 			break;
+		}
+	}
+
+	void tryDecCaesar() 
+	{
+		lengthStr = int(mess.length());
+		messToKey();
+		caeKey = 1;
+		for (int i = 0; i < 32; i++)
+		{
+			keyToCaesarKey();
+			keyToMess();
+			cout << i << "- ";
+			showMess();
+			cout << '\n';
 		}
 	}
 
@@ -453,14 +470,14 @@ int main()
 	string mess;
 	while (work) {
 		
-		////PLEASE REWORK IT LATER/////////
+		////////////PLEASE REWORK IT LATER/////////////
 
 		cout << endl << "Print your message" << endl;
 		while (true) {
 
 			getline(cin, mess);
 			if (mess.size() == 0)
-				cout << "Your message is empty, write again.\n";
+				cout << ' ';
 			else
 				break;
 		}
@@ -487,9 +504,11 @@ int main()
 			messageEnc.choiseEnc(chCh);
 			break;
 		default:
-			cout << "I can't understand, white 0, 1 or 2\n";
+			cout << "I can't understand, write 0, 1 or 2\n";
 		}
 	}
+
+	cout << endl << "Bye-Bye))" << endl;
 	////////Debug for Bacon Only//////////////
 	//bbbab aabba baaab baaaa aabbb aabba baaaa aabab aabba abbaa baaaa aabbb aabba bbabb baabb baaba abaaa aaaaa baaaa
 
