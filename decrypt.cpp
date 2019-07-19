@@ -8,7 +8,7 @@ decrypt::decrypt(string m)
     :mess(m) 
 {
 	cout<<"Welcome to decrypt"<<endl;
-	BECON_MESS_SIZE = int(m.length()) / 6 + 1;
+	BECON_MESS_SIZE = int(m.length()) / 5;
     MESS_SIZE = m.length();
 }
 
@@ -52,7 +52,18 @@ void decrypt::caesar(){
 }
 
 void decrypt::becon(){
+    string abCode;
+    for (int i; i < MESS_SIZE; i += 5)
+    {
+        abCode = mess.substr(i, 5);
+        message.push_back(Letter(abCode));
 
+
+        message[i].ch = ALPH_BECON[AB_BECON.find(abCode)];
+
+        cout<<message[i].ch;
+    }
+    cout << endl;
 }
 
 void decrypt::vernam(){

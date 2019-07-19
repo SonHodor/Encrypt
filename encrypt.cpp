@@ -1,5 +1,6 @@
 #include "letter.h"
 #include "encrypt.h"
+#include <string>
 #include <iostream>
 #include "cctype"
 
@@ -53,8 +54,14 @@ void encrypt::caesar(){
 void encrypt::becon(){
     for (int i;i<MESS_SIZE;++i)
     {
-        cout<<mess[i];
+        message.push_back(Letter(tolower(mess[i])));
+        message[i].key = (int)ALPH_BECON.find(mess[i]);
+
+        message[i].ab = AB_BECON.substr(message[i].key,5);
+
+        cout<<message[i].ab;
     }
+    cout<<endl;
 }
 
 void encrypt::vernam(){
