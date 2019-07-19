@@ -9,34 +9,33 @@ int main()
 {
 	bool work = true;
 	string mess;
-	while (work) {
+	while (true) {
 
 		////////////PLEASE REWORK IT LATER/////////////
 
-		cout << endl << "Print your message" << endl;
+		cout << endl << "Print your message or 'q' to exit: ";
 		cin >> mess;
 		///////////////////////////////////////////////
+		if(mess == "q") break;
 
-		decrypt de;
-		encrypt en;
+		decrypt de(mess);
+		encrypt en(mess);
 
 		char choise;
-		cout << "What do you want to do with text?\n1.Encrypt\n2.Decrypt\n\nIf you want to exit program enter 0\n";
+		cout << "\nWhat do you want to do with text?\n1.Encrypt\n2.Decrypt\n: ";
 		cin >> choise;
 		switch (choise) {
-		case '0':			   //EXIT
-			work = false;
-			break;
-		case '1':              //Decrypt
-			cout << "What do you want to use?\n1.Bacon.\n2.Caesar.\n3.Vernam." << endl;
-			cin >> choise;
-			de.choise(choise);
-			break;
-		case '2':              //Encrypt
-			cout << "What do you want to use?\n1.Bacon.\n2.Caesar.\n3.Vernam." << endl;
+		case '1':              //Encrypt
+			cout << "\nWhat do you want to use?\n1.Caesar.\n2.Becon.\n3.Vernam." << endl;
 			cin >> choise;
 			en.choise(choise);
 			break;
+		case '2':              //Decrypt
+			cout << "\nWhat do you want to use?\n1.Caesar.\n2.Becon.\n3.Vernam." << endl;
+			cin >> choise;
+			de.choise(choise);
+			break;
+		
 		default:
 			cout << "I can't understand, write 0, 1 or 2\n";
 		}

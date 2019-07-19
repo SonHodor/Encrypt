@@ -8,9 +8,9 @@ class encrypt
 {
     public:
         std::string mess;
-	    int g;
 	    std::vector <Letter> message;
-	    int caeKey = 3;
+		int MESS_SIZE;
+		int caeKey = 3;
 
 	    encrypt(std::string m);
 	    encrypt();
@@ -18,8 +18,13 @@ class encrypt
         void choise(char ch);
 
     private:
-        std::string alphBecon = "abcdefghijklmnopqrstuvwxyz.,'!? a";
-	    std::string beconAB = "aaaaabbbbbabbbaabbababbaaababaabaaaaa";
+
+		void caesar();
+		void becon();
+		void vernam();
+
+        std::string ALPH_BECON = "abcdefghijklmnopqrstuvwxyz.,'!? a";
+	    std::string AB_BECON = "aaaaabbbbbabbbaabbababbaaababaabaaaaa";
 
 };
 
