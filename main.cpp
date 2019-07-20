@@ -12,26 +12,33 @@ int main()
 	while (true) {
 
 		////////////PLEASE REWORK IT LATER/////////////
-
 		cout << endl << "Print your message or 'q' to exit: ";
-		cin >> mess;
-		///////////////////////////////////////////////
+		while (true) {
+
+			getline(cin, mess);
+			if (mess.size() == 0)
+				cout << ' ';
+			else
+				break;
+		}
+		////////////////REALY BAD INPUT////////////////
+
 		if(mess == "q") break;
 
 		decrypt de(mess);
 		encrypt en(mess);
 
 		char choise;
-		cout << "\nWhat do you want to do with text?\n1.Encrypt\n2.Decrypt\n: ";
+		cout << "\n1.Encrypt\n2.Decrypt\nYou want to: ";
 		cin >> choise;
 		switch (choise) {
 		case '1':              //Encrypt
-			cout << "\nWhat do you want to use?\n1.Caesar.\n2.Becon.\n3.Vernam." << endl;
+			cout << "\n1.Caesar.\n2.Becon.\n3.Vernam.\nAnd you want to use: " << endl;
 			cin >> choise;
 			en.choise(choise);
 			break;
 		case '2':              //Decrypt
-			cout << "\nWhat do you want to use?\n1.Caesar.\n2.Becon.\n3.Vernam." << endl;
+			cout << "\n1.Caesar.\n2.Becon.\n3.Vernam.\nAnd you want to use: " << endl;
 			cin >> choise;
 			de.choise(choise);
 			break;
@@ -42,11 +49,5 @@ int main()
 	}
 
 	cout << endl << "Bye-Bye))" << endl;
-	////////Debug for Bacon Only//////////////
-	//bbbab aabba baaab baaaa aabbb aabba baaaa aabab aabba abbaa baaaa aabbb aabba bbabb baabb baaba abaaa aaaaa baaaa
-
-	////////Debug for Caesar with key = 15////
-	//?xs!apbtbkobpbpxctowdxmmmm
-
 	return 0;
 }

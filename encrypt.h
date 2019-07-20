@@ -7,11 +7,6 @@
 class encrypt
 {
     public:
-        std::string mess;
-	    std::vector <Letter> message;
-		int MESS_SIZE;
-		int caeKey = 3;
-
 	    encrypt(std::string m);
 	    encrypt();
 
@@ -23,8 +18,14 @@ class encrypt
 		void becon();
 		void vernam();
 
-        std::string ALPH_BECON = "abcdefghijklmnopqrstuvwxyz.,'!? a";
-	    std::string AB_BECON = "aaaaabbbbbabbbaabbababbaaababaabaaaaa";
+		char help(char v1, char v2);
+
+		std::string mess;
+	    std::vector <Letter> message;
+		int MESS_SIZE;
+		static int caeKey;
+        static std::string ALPH_BECON;
+	    static std::string AB_BECON;
 
 };
 

@@ -9,12 +9,6 @@
 class decrypt
 {
     public:
-        std::string mess;
-	    std::vector <Letter> message;
-		int BECON_MESS_SIZE;
-		int MESS_SIZE;
-	    int caeKey = 0;
-
 	    decrypt(std::string m);
 	    decrypt();
 
@@ -25,8 +19,15 @@ class decrypt
 		void becon();
 		void vernam();
 		
-        std::string ALPH_BECON = "abcdefghijklmnopqrstuvwxyz.,'!? a";
-	    std::string AB_BECON = "aaaaabbbbbabbbaabbababbaaababaabaaaaa";
+		char help(char v1, char v2);
+		
+		std::string mess;
+	    std::vector <Letter> message;
+		int BECON_MESS_SIZE;
+		int MESS_SIZE;
+		static int caeKey;
+        static std::string ALPH_BECON;
+	    static std::string AB_BECON;
 };
 
 #endif // DECRYPT_H
