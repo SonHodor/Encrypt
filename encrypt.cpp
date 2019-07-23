@@ -2,7 +2,6 @@
 #include "encrypt.h"
 #include <string>
 #include <iostream>
-#include <cctype>
 #include <ctime>
 #include <stdlib.h> 
 
@@ -36,32 +35,40 @@ void encrypt::caesar(){
 
     cout<<"Write Caesar key: "; 
     cin>>caeKey;
+    Letter * m;
 
     for (int i;i<MESS_SIZE;++i)
-    {
-        message.push_back(Letter(tolower(mess[i])));
-        message[i].key = (int)ALPH_BECON.find(mess[i]);
+    {        
+        //generating vector for message
+        message.push_back(Letter(&mess[i]));
+        m = & message[i];
+        m->key = (int)ALPH_BECON.find(mess[i]);
 
-        if(message[i].key<0) message[i].key = 31;
+        //'if char is not in alphabet' ch = space
+        if(m->key<0) m->key = 31;
 
-        if(message[i].key<26)
-            message[i].key = (message[i].key + caeKey) % 26;
+        //encrypting just if ch is letter
+        if(m->key<26) m->key = (m->key + caeKey) % 26;
 
-        message[i].ch = ALPH_BECON[message[i].key];
+        //convert key to ch
+        m->ch = ALPH_BECON[m->key];
 
-        cout<<message[i].ch;
+        cout<<m->ch;
     }
 }
 
 void encrypt::becon(){
+    Letter * m;
     for (int i;i<MESS_SIZE;++i)
     {
-        message.push_back(Letter(tolower(mess[i])));
-        message[i].key = (int)ALPH_BECON.find(mess[i]);
+        //TODO: rewrite to 1 line
+        message.push_back(Letter(&mess[i]));
+        m = & message[i];
+        m->key = (int)ALPH_BECON.find(mess[i]);
 
-        message[i].ab = AB_BECON.substr(message[i].key,5);
+        m->ab = AB_BECON.substr(m->key,5);
 
-        cout<<message[i].ab;
+        cout<<m->ab;
     }
     cout<<endl;
 }
@@ -72,34 +79,40 @@ void encrypt::vernam(){
     srand(time(0));
 
     for (int i;i<MESS_SIZE;++i)
-    {        
-        message.push_back(Letter(tolower(mess[i])));
-        message[i].key = (int)ALPH_BECON.find(mess[i]);
-        string abCode = AB_BECON.substr(message[i].key,5);
+    {
+        //generating vector for message
+        message.push_back(Letter(&mess[i]));
+        Letter * m = & message[i];
+        m->key = (int)ALPH_BECON.find(mess[i]);
+        string abCode = AB_BECON.substr(m->key,5);
 
-        // generating random key to vernam 
+        // generating vector of Letters from random keys
         vernamKey.push_back(Letter(rand() % 32));
-        vernamKey[i].ab = AB_BECON.substr(vernamKey[i].key,5);
+        Letter * v = & vernamKey[i];
+        v->ab = AB_BECON.substr(v->key,5);
 
-        message[i].ab = "";
+        //generating ab code for [i] char
+        m->ab = "";
         for (int j = 0; j < 5; j++){
-            message[i].ab += help(abCode[j], vernamKey[i].ab[j]);
+            m->ab += help(&abCode[j], &v->ab[j]);
         }
         
-        message[i].ch   = ALPH_BECON[AB_BECON.find(message[i].ab)];
-        vernamKey[i].ch = ALPH_BECON[vernamKey[i].key];
+        //converting ab keys to ch
+        m->ch = ALPH_BECON[AB_BECON.find(m->ab)];
+        v->ch = ALPH_BECON[v->key];
 
-        cout<<message[i].ch;
+        cout<<m->ch;
     }
-    cout<<"<\n"<<endl<<"Your key is between arrows >";
+    cout<<"<\n"<<endl<<"Your key is between arrows >"; //'between arrows' because space can be a part of a key
     for(int i;i<MESS_SIZE;++i)
         cout<<vernamKey[i].ch;
     cout<<'<'<<endl;
 }
 
-char encrypt::help(char v1, char v2)
+char encrypt::help(const char * v1,const char * v2)
 {
-    return ((v1=='a'&&v2=='a')||(v1=='b'&&v2=='b'))?'a':'b';
+    //TODO: replase random here
+    return ((*v1=='a'&&*v2=='a')||(*v1=='b'&&*v2=='b'))?'a':'b';
 }
 
 int encrypt::caeKey = 0;

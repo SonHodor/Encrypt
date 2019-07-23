@@ -7,10 +7,10 @@
 class encrypt
 {
     public:
-	    encrypt(std::string m);
+	    encrypt(std::string m); //define the message size var
 	    encrypt();
 
-        void choise(char ch);
+        void choise(char ch); //chiose between 3 methods of encryption
 
     private:
 
@@ -18,14 +18,17 @@ class encrypt
 		void becon();
 		void vernam();
 
-		char help(char v1, char v2);
+		char help(const char * v1,const char * v2); //method for vernam(), basicaly it's XOR for chars
 
-		std::string mess;
-	    std::vector <Letter> message;
-		int MESS_SIZE;
-		static int caeKey;
-        static std::string ALPH_BECON;
-	    static std::string AB_BECON;
+		std::string mess; // holds message input
+
+		//TODO: rewrite whole program from vectors to arrays
+	    std::vector <Letter> message; // holds struct arr
+		
+		int MESS_SIZE; // length od message
+		static int caeKey; // holds key for caesar encrypt
+        static std::string ALPH_BECON; // holds alphabet of symbols
+	    static std::string AB_BECON; // holds a beacon key
 
 };
 

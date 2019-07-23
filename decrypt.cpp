@@ -1,22 +1,19 @@
 #include "letter.h"
 #include "decrypt.h"
 #include <iostream>
-#include <ctime>
-#include <stdlib.h> 
 
 using namespace std;
 
 decrypt::decrypt(string m)
     :mess(m) 
 {
-	cout<<"Welcome to decrypt"<<endl;
 	BECON_MESS_SIZE = int(m.length()) / 5;
     MESS_SIZE = m.length();
 }
 
 decrypt::decrypt(){}
 
-void decrypt::choise(char ch){
+void decrypt::choise(const char ch){
     switch (ch){
     case '1':
         caesar();
@@ -35,45 +32,64 @@ void decrypt::choise(char ch){
 void decrypt::caesar(){
     cout<<"Write Caesar key: "; 
     cin>>caeKey;
+    Letter * m;
 
-    for (int i;i<MESS_SIZE;++i)
+    for (int i; i < MESS_SIZE; ++i)
     {
-        message.push_back(Letter(mess[i]));
-        message[i].key = (int)ALPH_BECON.find(mess[i]);
+        //generating vector for message
+        message.push_back(Letter(& mess[i]));
+        m = & message[i];
+        m->key = (int)ALPH_BECON.find(mess[i]);
 
-        if(message[i].key<0) message[i].key = 31;
+        //'if char is not in alphabet' ch = space
+        if(m->key < 0){
+            m->key = 31;
+        }
 
-        if(message[i].key<26)
-            message[i].key = (message[i].key - caeKey);
+        //encrypting just if ch is letter
+        if(m->key < 26){
+            m->key = (m->key - caeKey);
+        }
 
-        if(message[i].key<0) message[i].key += 26;
-        message[i].ch = ALPH_BECON[message[i].key];
+        if(m->key < 0){
+            m->key += 26;
+        }
 
-        cout<<message[i].ch;
+        m->ch = ALPH_BECON[m->key];
+
+        cout<<m->ch;
     }
 }
 
 void decrypt::becon(){
     string abCode;
+    Letter * m;
+
     for (int i; i < MESS_SIZE; i += 5)
     {
+        //TODO: rewrite to 1 line, code is shit
+
+        //generating vector for message
         abCode = mess.substr(i, 5);
-        message.push_back(Letter(abCode));
+        message.push_back(Letter(& abCode));
+        m = & message[i];
 
-
-        message[i].ch = ALPH_BECON[AB_BECON.find(abCode)];
-
-        cout<<message[i].ch;
+        m->ch = ALPH_BECON[AB_BECON.find(abCode)];
+        cout<<m->ch;
     }
     cout << endl;
 }
 
 void decrypt::vernam(){
     vector<Letter> vernamKey;
-    srand(time(0));
+    Letter * m;
+    Letter * v;
     string keyMess;
+    
+    //TODO:
     ////////////PLEASE REWORK IT LATER/////////////
 		cout << "Write your encryption key: ";
+        cin.clear();
 		while (true) {
 
 			getline(cin, keyMess);
@@ -84,29 +100,34 @@ void decrypt::vernam(){
 		}
     ////////////////REALY BAD INPUT////////////////
     
-    for (int i;i<MESS_SIZE;++i)
+    for (int i; i < MESS_SIZE; ++i)
     {
-        message.push_back(Letter(tolower(mess[i])));
-        message[i].key = (int)ALPH_BECON.find(mess[i]);
-        string abCode = AB_BECON.substr(message[i].key,5);
+        //generating vector for message
+        message.push_back(Letter(&mess[i]));
+        m = &message[i];
+        m->key = (int)ALPH_BECON.find(mess[i]);
+        string abCode = AB_BECON.substr(m->key, 5);
 
-        vernamKey.push_back(Letter(keyMess[i]));
-        vernamKey[i].key = ALPH_BECON.find(vernamKey[i].ch);
-        vernamKey[i].ab = AB_BECON.substr(vernamKey[i].key,5);
+        //generating vector for key
+        vernamKey.push_back(Letter(&keyMess[i])); //i fuckin' forgot here '&' and trying to find a problem for 30 minutes
+        v = &vernamKey[i];
+        v->key = (int)ALPH_BECON.find(v->ch);
+        v->ab = AB_BECON.substr(v->key, 5);
 
-        message[i].ab = "";
+        //generating ab code for [i] char
+        m->ab="";
         for (int j = 0; j < 5; j++){
-            message[i].ab += help(abCode[j], vernamKey[i].ab[j]);
+            m->ab += help(& abCode[j], & v->ab[j]);
         }
         
-        message[i].ch = ALPH_BECON[AB_BECON.find(message[i].ab)];
-        cout<<message[i].ch;
+        m->ch = ALPH_BECON[AB_BECON.find(m->ab)];
+        cout<<m->ch;
     }
 }
 
-char decrypt::help(char v1, char v2)
+char decrypt::help(const char * v1,const char * v2)
 {
-    return ((v1=='a'&&v2=='a')||(v1=='b'&&v2=='b'))?'a':'b';
+    return ((*v1=='a'&&*v2=='a')||(*v1=='b'&&*v2=='b'))?'a':'b';
 }
 
 int decrypt::caeKey = 0;

@@ -11,6 +11,7 @@ int main()
 	string mess;
 	while (true) {
 
+		//TODO:
 		////////////PLEASE REWORK IT LATER/////////////
 		cout << endl << "Print your message or 'q' to exit: ";
 		while (true) {
