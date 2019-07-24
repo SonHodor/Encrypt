@@ -7,9 +7,9 @@ struct Letter
 {
 public:
 	// CONSTRUCTORS //
-	Letter(char * c):ch(tolower(*c)){}; // sets ch var
-	Letter(int k):key(k){}; // sets key var
-	Letter(std::string * s):ab(*s){}; // sets ab var
+	Letter(char * c) :ch(tolower(*c)) {}; //sets ch var
+	Letter(int k) :key(k) {}; //sets key var
+	Letter(std::string * s) :ab(*s) {}; //sets ab var
 	//////////////////
 
 	char ch;

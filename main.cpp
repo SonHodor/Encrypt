@@ -24,7 +24,7 @@ int main()
 		}
 		////////////////REALY BAD INPUT////////////////
 
-		if(mess == "q") break;
+		if (mess == "q") break;
 
 		decrypt de(mess);
 		encrypt en(mess);
@@ -33,17 +33,17 @@ int main()
 		cout << "\n1.Encrypt\n2.Decrypt\nYou want to: ";
 		cin >> choise;
 		switch (choise) {
-		case '1':              //Encrypt
+		case '1'://Encrypt
 			cout << "\n1.Caesar.\n2.Becon.\n3.Vernam.\nAnd you want to use: " << endl;
 			cin >> choise;
 			en.choise(choise);
 			break;
-		case '2':              //Decrypt
+		case '2'://Decrypt
 			cout << "\n1.Caesar.\n2.Becon.\n3.Vernam.\nAnd you want to use: " << endl;
 			cin >> choise;
 			de.choise(choise);
 			break;
-		
+
 		default:
 			cout << "I can't understand, write 0, 1 or 2\n";
 		}
