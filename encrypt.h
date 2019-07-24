@@ -18,7 +18,7 @@ private:
 	void becon();
 	void vernam();
 
-	char help(const char * v1, const char * v2); //method for vernam(), basicaly it's XOR for chars
+	char randCh(char * v1); //method for vernam(), basicaly it's XOR for chars
 
 	std::string mess; //holds message input
 

@@ -67,15 +67,12 @@ void decrypt::becon() {
 
 	for (int i; i < MESS_SIZE; i += 5)
 	{
-		//TODO: rewrite to 1 line, code is shit
-
-		//generating vector for message
-		abCode = mess.substr(i, 5);
-		message.push_back(Letter(&abCode));
-		m = &message[i];
-
-		m->ch = ALPH_BECON[AB_BECON.find(abCode)];
-		cout << m->ch;
+		/*
+		 * get substring from message,
+		 * find index of this substring in AB_BECON string
+		 * and output char of ALPH_BECON under this index
+		 */
+		cout << ALPH_BECON[AB_BECON.find(mess.substr(i, 5))];
 	}
 	cout << endl;
 }
