@@ -83,19 +83,11 @@ void decrypt::vernam() {
 	Letter * v;
 	string keyMess;
 
-	//TODO:
-	////////////PLEASE REWORK IT LATER/////////////
-	cout << "Write your encryption key: ";
-	cin.clear();
-	while (true) {
-
-		getline(cin, keyMess);
-		if (keyMess.size() == 0)
-			cout << ' ';
-		else
-			break;
+	while (true) 
+	{
+		getline(cin, mess);
+		if (mess.size() != 0) break;
 	}
-	////////////////REALY BAD INPUT////////////////
 
 	for (int i; i < MESS_SIZE; ++i)
 	{
