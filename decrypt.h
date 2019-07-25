@@ -19,12 +19,12 @@ private:
 	void becon();
 	void vernam();
 
-	char help(const char * v1, const char * v2); //method for vernam(), basicaly it's XOR for chars
+	char help(const char & v1, const char & v2); //method for vernam(), basicaly it's XOR for chars
 
 	std::string mess; //holds message input
 
 	//TODO: rewrite whole program from vectors to arrays
-	std::vector <Letter> message; //holds struct arr
+	Letter * message; //holds struct arr
 
 	int BECON_MESS_SIZE; //length of beacon encrypted cypher
 	int MESS_SIZE; //length od message

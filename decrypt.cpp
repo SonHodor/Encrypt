@@ -32,39 +32,36 @@ void decrypt::choise(const char ch) {
 void decrypt::caesar() {
 	cout << "Write Caesar key: ";
 	cin >> caeKey;
-	Letter * m;
 
 	for (int i; i < MESS_SIZE; ++i)
 	{
 		//generating vector for message
-		message.push_back(Letter(&mess[i]));
-		m = &message[i];
-		m->key = (int)ALPH_BECON.find(mess[i]);
+		message = new Letter(&mess[i]);
+		message->key = (int)ALPH_BECON.find(mess[i]);
 
 		//'if char is not in alphabet' ch = space
-		if (m->key < 0) {
-			m->key = 31;
+		if (message->key < 0) {
+			message->key = 31;
 		}
 
 		//encrypting just if ch is letter
-		if (m->key < 26) {
-			m->key = (m->key - caeKey);
+		if (message->key < 26) {
+			message->key = (message->key - caeKey);
 		}
 
-		if (m->key < 0) {
-			m->key += 26;
+		if (message->key < 0) {
+			message->key += 26;
 		}
 
-		m->ch = ALPH_BECON[m->key];
+		message->ch = ALPH_BECON[message->key];
 
-		cout << m->ch;
+		cout << message->ch;
+		message++;
 	}
+	delete[] message;
 }
 
 void decrypt::becon() {
-	string abCode;
-	Letter * m;
-
 	for (int i; i < MESS_SIZE; i += 5)
 	{
 		/*
@@ -78,45 +75,48 @@ void decrypt::becon() {
 }
 
 void decrypt::vernam() {
-	vector<Letter> vernamKey;
-	Letter * m;
-	Letter * v;
+	Letter * vernam;
 	string keyMess;
 
+	cout << "Write your encryption key: ";
 	while (true) 
 	{
-		getline(cin, mess);
-		if (mess.size() != 0) break;
+		getline(cin, keyMess);
+		if (keyMess.size() != 0) break;
 	}
 
 	for (int i; i < MESS_SIZE; ++i)
 	{
 		//generating vector for message
-		message.push_back(Letter(&mess[i]));
-		m = &message[i];
-		m->key = (int)ALPH_BECON.find(mess[i]);
-		string abCode = AB_BECON.substr(m->key, 5);
+		message = new Letter(&mess[i]);
+		message->key = (int)ALPH_BECON.find(message->ch);
+		string abCode = AB_BECON.substr(message->key, 5);
 
 		//generating vector for key
-		vernamKey.push_back(Letter(&keyMess[i])); //i fuckin' forgot here '&' and trying to find a problem for 30 minutes
-		v = &vernamKey[i];
-		v->key = (int)ALPH_BECON.find(v->ch);
-		v->ab = AB_BECON.substr(v->key, 5);
+		vernam = new Letter(&keyMess[i]);
+		//cout<<vernam->ch;
+		vernam->key = (int)ALPH_BECON.find(vernam->ch);
+		vernam->ab  = AB_BECON.substr(vernam->key, 5);
 
 		//generating ab code for [i] char
-		m->ab = "";
+		message->ab = "";
 		for (int j = 0; j < 5; j++) {
-			m->ab += help(&abCode[j], &v->ab[j]);
+			message->ab += help(abCode[j], vernam->ab[j]);
 		}
 
-		m->ch = ALPH_BECON[AB_BECON.find(m->ab)];
-		cout << m->ch;
+		message->ch = ALPH_BECON[AB_BECON.find(message->ab)];
+		cout << message->ch;
+		message++;
+		vernam++;
 	}
+	delete[] message;
+	delete[] vernam;
 }
 
-char decrypt::help(const char * v1, const char * v2)
+
+char decrypt::help(const char & ch1, const char & ch2)
 {
-	return ((*v1 == 'a'&&*v2 == 'a') || (*v1 == 'b'&&*v2 == 'b')) ? 'a' : 'b';
+	return ((ch1 == 'a'&&ch2 == 'a') || (ch1 == 'b'&&ch2 == 'b')) ? 'a' : 'b';
 }
 
 int decrypt::caeKey = 0;
