@@ -28,12 +28,12 @@ int main()
 		cin >> choise;
 		switch (choise) {
 		case '1'://Encrypt
-			cout << "\n1.Caesar.\n2.Becon.\n3.Vernam.\nAnd you want to use: " << endl;
+			cout << "\n1.Caesar.\n2.Becon.\n3.Vernam.\nAnd you want to use: ";
 			cin >> choise;
 			en.choise(choise);
 			break;
 		case '2'://Decrypt
-			cout << "\n1.Caesar.\n2.Becon.\n3.Vernam.\nAnd you want to use: " << endl;
+			cout << "\n1.Caesar.\n2.Becon.\n3.Vernam.\nAnd you want to use: ";
 			cin >> choise;
 			de.choise(choise);
 			break;

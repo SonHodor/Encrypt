@@ -14,6 +14,7 @@ encrypt::encrypt(string m)
 }
 
 encrypt::encrypt() {}
+encrypt::~encrypt() {}
 
 void encrypt::choise(char ch) {
 	switch (ch) {
@@ -32,33 +33,31 @@ void encrypt::choise(char ch) {
 }
 
 void encrypt::caesar() {
-
+	message = new Letter[MESS_SIZE];
 	cout << "Write Caesar key: ";
 	cin >> caeKey;
-	Letter * m;
 
 	for (int i; i < MESS_SIZE; ++i)
 	{
 		//generating vector for message
-		message.push_back(Letter(&mess[i]));
-		m = &message[i];
-		m->key = (int)ALPH_BECON.find(mess[i]);
+		message[i] = Letter(&mess[i]);
+		message[i].key = (int)ALPH_BECON.find(mess[i]);
 
 		//'if char is not in alphabet' ch = space
-		if (m->key < 0)m->key = 31;
+		if (message[i].key < 0)message[i].key = 31;
 
 		//encrypting just if ch is letter
-		if (m->key < 26) m->key = (m->key + caeKey) % 26;
+		if (message[i].key < 26) message[i].key = (message[i].key + caeKey) % 26;
 
 		//convert key to ch
-		m->ch = ALPH_BECON[m->key];
+		message[i].ch = ALPH_BECON[message[i].key];
 
-		cout << m->ch;
+		cout << message[i].ch;
 	}
+	delete[] message;
 }
 
 void encrypt::becon() {
-	Letter * m;
 	for (int i; i < MESS_SIZE; ++i)
 	{
         /*
@@ -72,39 +71,40 @@ void encrypt::becon() {
 }
 
 void encrypt::vernam() {
-	string vernamKey;
+	string vernam;
 	srand(time(0));
-    
+    message = new Letter[MESS_SIZE];
+	
     //'between arrows' because space can be a part of a key
-    cout << endl << "Your key is between arrows >"; 
+    cout << endl << "Your message is between arrows >"; 
 
 	for (int i; i < MESS_SIZE; ++i)
 	{
 		//generating vector for message
-		message.push_back(Letter(&mess[i]));
-		Letter * m = &message[i];
-		m->key = (int)ALPH_BECON.find(mess[i]);
-		m->ab = AB_BECON.substr(m->key, 5);
+		message[i] = Letter(&mess[i]);
+		message[i].key = (int)ALPH_BECON.find(message[i].ch);
+		message[i].ab = AB_BECON.substr(message[i].key, 5);
 
-		//generating and output vernam key ch
-        vernamKey = "";
-		for (int j = 0; j < 5; j++)
-			vernamKey += randCh(&m->ab[j]);
-        cout<<ALPH_BECON[AB_BECON.find(vernamKey)];
+		//generating vernam ab
+		string verCh = "";
+		for (int j = 0; j < 5; j++) 
+		{
+			verCh += randCh(message[i].ab[j]);
+		}
+		//converting vernam ab to char
+		vernam += ALPH_BECON[AB_BECON.find(verCh)];
 
-		//converting ab keys to ch
-		m->ch = ALPH_BECON[AB_BECON.find(m->ab)];
+		//converting message[i] from ab to char
+		message[i].ch = ALPH_BECON[AB_BECON.find(message[i].ab)];
+		cout<<message[i].ch;
 	}
-
-	cout << "<\n" << "Your message is between arrows >";
-	for (int i; i < MESS_SIZE; ++i)
-		cout << message[i].ch;
-	cout << '<' << endl;
+	cout << "<\n" << "Your key is between arrows >"<< vernam << '<' << endl;
+	delete[] message;
 }
 
-char encrypt::randCh(char * v1) {
-    char v2 = (rand() % 2 == 0) ? 'a' : 'b';
-    *v1 = ((*v1 == 'a'&&v2 == 'a') || (*v1 == 'b'&&v2 == 'b')) ? 'a' : 'b';
+char encrypt::randCh(char & v1) {
+    char v2 = ALPH_BECON[rand() % 2]; //'a' or 'b'
+    v1 = ((v1 == 'a'&&v2 == 'a') || (v1 == 'b'&&v2 == 'b')) ? 'a' : 'b';
     return v2;
 }
 

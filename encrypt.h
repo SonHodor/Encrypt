@@ -10,6 +10,8 @@ public:
 	encrypt(std::string m); //define the message size var
 	encrypt();
 
+	~encrypt();
+
 	void choise(char ch); //chiose between 3 methods of encryption
 
 private:
@@ -18,12 +20,11 @@ private:
 	void becon();
 	void vernam();
 
-	char randCh(char * v1); //method for vernam(), basicaly it's XOR for chars
+	char randCh(char & v1); //method for vernam(), basicaly it's XOR for chars
 
 	std::string mess; //holds message input
 
-	//TODO: rewrite whole program from vectors to arrays
-	std::vector <Letter> message; // holds struct arr
+	Letter * message; // holds struct arr
 
 	int MESS_SIZE; //length od message
 	static int caeKey; //holds key for caesar encrypt
