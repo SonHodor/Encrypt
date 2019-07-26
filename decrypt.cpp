@@ -30,33 +30,27 @@ void decrypt::choise(const char ch) {
 }
 
 void decrypt::caesar() {
+	message = new Letter[MESS_SIZE];
 	cout << "Write Caesar key: ";
 	cin >> caeKey;
 
 	for (int i; i < MESS_SIZE; ++i)
 	{
 		//generating vector for message
-		message = new Letter(&mess[i]);
-		message->key = (int)ALPH_BECON.find(mess[i]);
+		message[i] = Letter(&mess[i]);
+		message[i].key = (int)ALPH_BECON.find(mess[i]);
 
 		//'if char is not in alphabet' ch = space
-		if (message->key < 0) {
-			message->key = 31;
-		}
-
+		if (message[i].key < 0) message[i].key = 31;
+		
 		//encrypting just if ch is letter
-		if (message->key < 26) {
-			message->key = (message->key - caeKey);
-		}
+		if (message[i].key < 26) message[i].key = (message[i].key - caeKey);
+		
+		if (message[i].key < 0) message[i].key += 26;
 
-		if (message->key < 0) {
-			message->key += 26;
-		}
+		message[i].ch = ALPH_BECON[message[i].key];
 
-		message->ch = ALPH_BECON[message->key];
-
-		cout << message->ch;
-		message++;
+		cout << message[i].ch;
 	}
 	delete[] message;
 }
@@ -75,7 +69,8 @@ void decrypt::becon() {
 }
 
 void decrypt::vernam() {
-	Letter * vernam;
+	message = new Letter[MESS_SIZE];
+	Letter * vernam = new Letter[MESS_SIZE];
 	string keyMess;
 
 	cout << "Write your encryption key: ";
@@ -88,26 +83,24 @@ void decrypt::vernam() {
 	for (int i; i < MESS_SIZE; ++i)
 	{
 		//generating vector for message
-		message = new Letter(&mess[i]);
-		message->key = (int)ALPH_BECON.find(message->ch);
-		string abCode = AB_BECON.substr(message->key, 5);
+		message[i] = Letter(&mess[i]);
+		message[i].key = (int)ALPH_BECON.find(message[i].ch);
+		string abCode = AB_BECON.substr(message[i].key, 5);
 
 		//generating vector for key
-		vernam = new Letter(&keyMess[i]);
+		vernam[i] = Letter(&keyMess[i]);
 		//cout<<vernam->ch;
-		vernam->key = (int)ALPH_BECON.find(vernam->ch);
-		vernam->ab  = AB_BECON.substr(vernam->key, 5);
+		vernam[i].key = (int)ALPH_BECON.find(vernam[i].ch);
+		vernam[i].ab  = AB_BECON.substr(vernam[i].key, 5);
 
 		//generating ab code for [i] char
-		message->ab = "";
+		message[i].ab = "";
 		for (int j = 0; j < 5; j++) {
-			message->ab += help(abCode[j], vernam->ab[j]);
+			message[i].ab += help(abCode[j], vernam[i].ab[j]);
 		}
 
-		message->ch = ALPH_BECON[AB_BECON.find(message->ab)];
-		cout << message->ch;
-		message++;
-		vernam++;
+		message[i].ch = ALPH_BECON[AB_BECON.find(message[i].ab)];
+		cout << message[i].ch;
 	}
 	delete[] message;
 	delete[] vernam;

@@ -23,7 +23,6 @@ private:
 
 	std::string mess; //holds message input
 
-	//TODO: rewrite whole program from vectors to arrays
 	Letter * message; //holds struct arr
 
 	int BECON_MESS_SIZE; //length of beacon encrypted cypher
