@@ -3,6 +3,10 @@
 #include <cctype>
 #include <string>
 
+/* TODO:
+ * create new branch, where Letter will rewrite to class 
+ */
+
 struct Letter
 {
 public:

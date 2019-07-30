@@ -23,6 +23,11 @@ int main()
 		decrypt de(mess);
 		encrypt en(mess);
 
+		/* TODO:
+		 * write new output, which will clear command line after choise
+		 * and output form like "You want to ENCRYPT *Hello world* with: "
+		 */
+
 		char choise;
 		cout << "\n1.Encrypt\n2.Decrypt\nYou want to: ";
 		cin >> choise;

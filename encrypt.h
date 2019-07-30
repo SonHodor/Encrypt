@@ -4,6 +4,10 @@
 #include <iostream>
 #include <vector>
 
+/* TODO:
+ * Make a prototype class for decrypt and encrypt
+ */
+
 class encrypt
 {
 public:
