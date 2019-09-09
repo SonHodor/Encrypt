@@ -11,10 +11,10 @@
 class decrypt
 {
 public:
-	decrypt(std::string m); //define the message size variables
+	decrypt(const std::string & m); //define the message size variables
 	decrypt();
 
-	void choise(const char ch); //chiose between 3 methods of decryption
+	void choise(const char & ch); //chiose between 3 methods of decryption
 
 private:
 	void caesar();

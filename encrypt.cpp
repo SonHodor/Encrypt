@@ -8,7 +8,7 @@
 
 using namespace std;
 
-encrypt::encrypt(string m)
+encrypt::encrypt(const string & m)
 	:mess(m) {
 	MESS_SIZE = m.length();
 }
@@ -16,7 +16,7 @@ encrypt::encrypt(string m)
 encrypt::encrypt() {}
 encrypt::~encrypt() {}
 
-void encrypt::choise(char ch) {
+void encrypt::choise(const char & ch) {
 	switch (ch) {
 	case '1':
 		caesar();
@@ -40,7 +40,7 @@ void encrypt::caesar() {
 	for (int i; i < MESS_SIZE; ++i)
 	{
 		//generating vector for message
-		message[i] = Letter(&mess[i]);
+		message[i] = Letter(mess[i]);
 		message[i].key = (int)ALPH_BECON.find(mess[i]);
 
 		//'if char is not in alphabet' ch = space
@@ -81,7 +81,7 @@ void encrypt::vernam() {
 	for (int i; i < MESS_SIZE; ++i)
 	{
 		//generating vector for message
-		message[i] = Letter(&mess[i]);
+		message[i] = Letter(mess[i]);
 		message[i].key = (int)ALPH_BECON.find(message[i].ch);
 		message[i].ab = AB_BECON.substr(message[i].key, 5);
 

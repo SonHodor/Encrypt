@@ -4,7 +4,7 @@
 
 using namespace std;
 
-decrypt::decrypt(string m)
+decrypt::decrypt(const string & m)
 	:mess(m)
 {
 	BECON_MESS_SIZE = int(m.length()) / 5;
@@ -13,7 +13,7 @@ decrypt::decrypt(string m)
 
 decrypt::decrypt() {}
 
-void decrypt::choise(const char ch) {
+void decrypt::choise(const char & ch) {
 	switch (ch) {
 	case '1':
 		caesar();
@@ -37,7 +37,7 @@ void decrypt::caesar() {
 	for (int i; i < MESS_SIZE; ++i)
 	{
 		//generating vector for message
-		message[i] = Letter(&mess[i]);
+		message[i] = Letter(mess[i]);
 		message[i].key = (int)ALPH_BECON.find(mess[i]);
 
 		//'if char is not in alphabet' ch = space
@@ -83,12 +83,12 @@ void decrypt::vernam() {
 	for (int i; i < MESS_SIZE; ++i)
 	{
 		//generating vector for message
-		message[i] = Letter(&mess[i]);
+		message[i] = Letter(mess[i]);
 		message[i].key = (int)ALPH_BECON.find(message[i].ch);
 		string abCode = AB_BECON.substr(message[i].key, 5);
 
 		//generating vector for key
-		vernam[i] = Letter(&keyMess[i]);
+		vernam[i] = Letter(keyMess[i]);
 		//cout<<vernam->ch;
 		vernam[i].key = (int)ALPH_BECON.find(vernam[i].ch);
 		vernam[i].ab  = AB_BECON.substr(vernam[i].key, 5);

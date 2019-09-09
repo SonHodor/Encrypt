@@ -11,12 +11,12 @@
 class encrypt
 {
 public:
-	encrypt(std::string m); //define the message size var
+	encrypt(const std::string & m); //define the message size var
 	encrypt();
 
 	~encrypt();
 
-	void choise(char ch); //chiose between 3 methods of encryption
+	void choise(const char & ch); //chiose between 3 methods of encryption
 
 private:
 
