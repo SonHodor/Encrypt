@@ -30,6 +30,8 @@ void decrypt::choise(const char & ch) {
 }
 
 void decrypt::caesar() {
+	if (mess.length() <= 0) throw "input message is null";
+
 	message = new Letter[MESS_SIZE];
 	cout << "Write Caesar key: ";
 	cin >> caeKey;
@@ -56,8 +58,11 @@ void decrypt::caesar() {
 }
 
 void decrypt::becon() {
+	if (mess.length() <= 0) throw "input message is null";
+
 	for (int i; i < MESS_SIZE; i += 5)
 	{
+		if ((int)AB_BECON.find(mess.substr(i, 5)) < 0) throw "this is not Becon";
 		/*
 		 * get substring from message,
 		 * find index of this substring in AB_BECON string
@@ -69,6 +74,8 @@ void decrypt::becon() {
 }
 
 void decrypt::vernam() {
+	if (mess.length() <= 0) throw "input message is null";
+
 	message = new Letter[MESS_SIZE];
 	Letter * vernam = new Letter[MESS_SIZE];
 	string keyMess;
@@ -79,6 +86,8 @@ void decrypt::vernam() {
 		getline(cin, keyMess);
 		if (keyMess.size() != 0) break;
 	}
+
+	if (mess.length() != keyMess.length()) throw "length of message and vernam are not equal";
 
 	for (int i; i < MESS_SIZE; ++i)
 	{

@@ -33,6 +33,8 @@ void encrypt::choise(const char & ch) {
 }
 
 void encrypt::caesar() {
+	if (mess.length() <= 0) throw "input message is null";
+
 	message = new Letter[MESS_SIZE];
 	cout << "Write Caesar key: ";
 	cin >> caeKey;
@@ -58,19 +60,32 @@ void encrypt::caesar() {
 }
 
 void encrypt::becon() {
+	if (mess.length() <= 0) throw "input message is null";
+
+	message = new Letter[MESS_SIZE];
+
 	for (int i; i < MESS_SIZE; ++i)
 	{
-        /*
-         * find index of [i] letter in message 
-         * and output substring by this index 
-         * with length 5
-         */
-		cout << AB_BECON.substr(ALPH_BECON.find(mess[i]), 5);
+		message[i] = Letter(mess[i]);
+
+		//find index of [i] ch in mess in ALPH_BECON and set it like a key
+		message[i].key = (int)ALPH_BECON.find(mess[i]);
+
+		//if can't find set 'space' key, which is 31
+		if (message[i].key < 0)message[i].key = 31;
+
+		//get substring by key with length 5
+		message[i].ab = AB_BECON.substr(message[i].key, 5);
+
+		cout << message[i].ab;
 	}
 	cout << endl;
+	delete[] message;
 }
 
 void encrypt::vernam() {
+	if (mess.length() <= 0) throw "input message is null";
+
 	string vernam;
 	srand(time(0));
     message = new Letter[MESS_SIZE];

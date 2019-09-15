@@ -27,25 +27,29 @@ int main()
 		 * write new output, which will clear command line after choise
 		 * and output form like "You want to ENCRYPT *Hello world* with: "
 		 */
-
-		char choise;
-		cout << "\n1.Encrypt\n2.Decrypt\nYou want to: ";
-		cin >> choise;
-		switch (choise) {
-		case '1'://Encrypt
-			cout << "\n1.Caesar.\n2.Becon.\n3.Vernam.\nAnd you want to use: ";
+		try{
+			char choise;
+			cout << "\n1.Encrypt\n2.Decrypt\nYou want to: ";
 			cin >> choise;
-			en.choise(choise);
-			break;
-		case '2'://Decrypt
-			cout << "\n1.Caesar.\n2.Becon.\n3.Vernam.\nAnd you want to use: ";
-			cin >> choise;
-			de.choise(choise);
-			break;
+			switch (choise) {
+			case '1'://Encrypt
+				cout << "\n1.Caesar.\n2.Becon.\n3.Vernam.\nAnd you want to use: ";
+				cin >> choise;
+				en.choise(choise);
+				break;
+			case '2'://Decrypt
+				cout << "\n1.Caesar.\n2.Becon.\n3.Vernam.\nAnd you want to use: ";
+				cin >> choise;
+				de.choise(choise);
+				break;
 
-		default:
-			cout << "I can't understand, write 0, 1 or 2\n";
+			default:
+				cout << "I can't understand, write 0, 1 or 2\n";
+			}
+		}catch(char const* ex){
+			cout<<"ERROR: Seems like "<<ex;
 		}
+		
 	}
 
 	cout << endl << "Bye-Bye))" << endl;
