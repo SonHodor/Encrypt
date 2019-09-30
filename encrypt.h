@@ -13,22 +13,28 @@ class encrypt
 public:
 	encrypt(const std::string & m); //define the message size var
 	encrypt();
-
 	~encrypt();
 
 	void choise(const char & ch); //chiose between 3 methods of encryption
 
-private:
+	std::string getInput();
+	std::string getOutput();
+	std::string getVernamKey();
+	void setCaesarKey(int key);
 
 	void caesar();
 	void becon();
 	void vernam();
 
+private:
+
 	char randCh(char & v1); //method for vernam(), basicaly it's XOR for chars
 
-	std::string mess; //holds message input
+	std::string mess; //holds user input
+	std::string outputMess; //holds user output
+	std::string vernamKey; //holds vernam encryption key
 
-	Letter * message; // holds struct arr
+	Letter * message; // holds struct array
 
 	int MESS_SIZE; //length od message
 	static int caeKey; //holds key for caesar encrypt
