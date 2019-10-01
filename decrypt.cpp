@@ -4,25 +4,25 @@
 
 using namespace std;
 
-decrypt::decrypt(const string & m)
-	:mess(m)
-{
+decrypt::decrypt() {}
+decrypt::decrypt(const string & m) :mess(m) {
 	BECON_MESS_SIZE = int(m.length()) / 5;
 	MESS_SIZE = m.length();
 }
-
-decrypt::decrypt() {}
 
 void decrypt::choise(const char & ch) {
 	switch (ch) {
 	case '1':
 		caesar();
+		cout << getOutput();
 		break;
 	case '2':
 		becon();
+		cout << getOutput();
 		break;
 	case '3':
 		vernam();
+		cout << getOutput();
 		break;
 	default:
 		break;
@@ -31,6 +31,7 @@ void decrypt::choise(const char & ch) {
 
 void decrypt::caesar() {
 	if (mess.length() <= 0) throw "input message is null";
+	outputMess = "";
 
 	message = new Letter[MESS_SIZE];
 	cout << "Write Caesar key: ";
@@ -52,42 +53,45 @@ void decrypt::caesar() {
 
 		message[i].ch = ALPH_BECON[message[i].key];
 
-		cout << message[i].ch;
+		outputMess += message[i].ch;
 	}
 	delete[] message;
 }
 
 void decrypt::becon() {
 	if (mess.length() <= 0) throw "input message is null";
+	outputMess = "";
 
-	for (int i; i < MESS_SIZE; i += 5)
+	for (int i = 0; i < MESS_SIZE; i += 5)
 	{
-		if ((int)AB_BECON.find(mess.substr(i, 5)) < 0) throw "this is not Becon";
+		if ((int)AB_BECON.find(mess.substr(i, 5)) < 0) {
+			throw "this is not Becon";
+		}
+
 		/*
-		 * get substring from message,
-		 * find index of this substring in AB_BECON string
-		 * and output char of ALPH_BECON under this index
-		 */
-		cout << ALPH_BECON[AB_BECON.find(mess.substr(i, 5))];
+		* get substring from message,
+		* find index of this substring in AB_BECON string
+		* and output char of ALPH_BECON under this index
+		*/
+		outputMess += ALPH_BECON[AB_BECON.find(mess.substr(i, 5))];
 	}
-	cout << endl;
 }
 
 void decrypt::vernam() {
 	if (mess.length() <= 0) throw "input message is null";
+	outputMess = "";
 
 	message = new Letter[MESS_SIZE];
 	Letter * vernam = new Letter[MESS_SIZE];
-	string keyMess;
 
 	cout << "Write your encryption key: ";
 	while (true) 
 	{
-		getline(cin, keyMess);
-		if (keyMess.size() != 0) break;
+		getline(cin, vernamKey);
+		if (vernamKey.size() != 0) break;
 	}
 
-	if (mess.length() != keyMess.length()) throw "length of message and vernam are not equal";
+	if (mess.length() != vernamKey.length()) throw "length of message and vernam are not equal";
 
 	for (int i; i < MESS_SIZE; ++i)
 	{
@@ -97,7 +101,7 @@ void decrypt::vernam() {
 		string abCode = AB_BECON.substr(message[i].key, 5);
 
 		//generating vector for key
-		vernam[i] = Letter(keyMess[i]);
+		vernam[i] = Letter(vernamKey[i]);
 		//cout<<vernam->ch;
 		vernam[i].key = (int)ALPH_BECON.find(vernam[i].ch);
 		vernam[i].ab  = AB_BECON.substr(vernam[i].key, 5);
@@ -108,13 +112,27 @@ void decrypt::vernam() {
 			message[i].ab += help(abCode[j], vernam[i].ab[j]);
 		}
 
-		message[i].ch = ALPH_BECON[AB_BECON.find(message[i].ab)];
-		cout << message[i].ch;
+		outputMess += ALPH_BECON[AB_BECON.find(message[i].ab)];
 	}
 	delete[] message;
 	delete[] vernam;
 }
 
+
+std::string decrypt::getInput(){
+	return mess;
+}
+
+std::string decrypt::getOutput(){
+	if(outputMess.length() > 0)
+		return outputMess;
+	else
+		throw "output is empty. Did you encrypt message?";
+}
+
+void decrypt::setCaesarKey(int key){
+	caeKey = key;
+}
 
 char decrypt::help(const char & ch1, const char & ch2)
 {
@@ -122,5 +140,5 @@ char decrypt::help(const char & ch1, const char & ch2)
 }
 
 int decrypt::caeKey = 0;
-string decrypt::ALPH_BECON = "abcdefghijklmnopqrstuvwxyz.,'!? a";
-string decrypt::AB_BECON = "aaaaabbbbbabbbaabbababbaaababaabaaaaa";
+string decrypt::ALPH_BECON = "abcdefghijklmnopqrstuvwxyz.,'!? a"; //All alphabet of encrypted letters
+string decrypt::AB_BECON = "aaaaabbbbbabbbaabbababbaaababaabaaaaa"; //Beacon encryption key, a=aaaaa, b=aaaab, etc

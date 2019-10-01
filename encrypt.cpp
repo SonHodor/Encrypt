@@ -14,7 +14,6 @@ encrypt::encrypt(const string & m)
 	:mess(m) {
 	MESS_SIZE = m.length();
 }
-encrypt::~encrypt() {}
 
 void encrypt::choise(const char & ch) {
 	switch (ch) {
