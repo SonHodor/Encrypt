@@ -1,5 +1,10 @@
 *.o
 *.exe
+*.sln
+*.vcxproj
+*.user
 
 .vs/
 .vscode/
+obj/
+bin/
